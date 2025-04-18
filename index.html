@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Slim Shady University - Login</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: 
+        linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+        url('BG.jpg') no-repeat center center fixed;
+      background-size: cover;
+      animation: zoomBG 25s ease-in-out infinite alternate;
+      z-index: -1;
+    }
+
+    @keyframes zoomBG {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.05); }
+    }
+
+    .navbar {
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem 2rem 0.5rem;
+    }
+
+    .navbar-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .navbar h1 {
+      width: 100%;
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #00ff66;
+      text-shadow: 0 0 10px #00ff66, 0 0 20px #00ff66;
+      animation: fadeGlow 2.5s ease-in-out forwards;
+    }
+
+    @keyframes fadeGlow {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+        text-shadow: none;
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+        text-shadow: 0 0 10px #00ff66, 0 0 20px #00ff66;
+      }
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .motto {
+      text-align: center;
+      color: #fff;
+      font-size: 1.2rem;
+      margin: 0.8rem 0 1.2rem;
+      font-style: italic;
+      text-shadow: 1px 1px 5px black;
+    }
+
+    .container {
+      flex: 1;
+      padding: 2rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .login-form {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 400px;
+      margin: auto;
+    }
+
+    .login-form h2 {
+      margin-bottom: 1rem;
+      color: #0d47a1;
+      text-align: center;
+    }
+
+    .login-form label {
+      display: block;
+      margin: 0.75rem 0 0.25rem;
+      font-weight: 500;
+    }
+
+    .login-form input,
+    .login-form select {
+      width: 100%;
+      padding: 0.6rem;
+      border: 1px solid #b0bec5;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+
+    .login-form button {
+      background-color: #1976d2;
+      color: white;
+      border: none;
+      padding: 0.75rem;
+      width: 100%;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    footer {
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+
+    section {
+      color: white;
+      max-width: 800px;
+      margin: auto;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      .navbar-top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar h1 {
+        font-size: 1.8rem;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+        margin-top: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-top">
+      <ul class="nav-links" style="margin-left: auto;">
+        <li><a onclick="showSection('login')">Home</a></li>
+        <li><a onclick="showSection('about')">About</a></li>
+        <li><a onclick="showSection('contact')">Contact</a></li>
+      </ul>
+    </div>
+    <h1>Slim Shady University</h1>
+    <div class="motto">"Will the Real Graduates Please Stand Up"</div>
+  </header>
+
+  <main class="container">
+    <div id="login" class="section">
+      <form id="loginForm" class="login-form">
+        <h2>Login</h2>
+        <label for="role">Select Role:</label>
+        <select id="role" required>
+          <option value="">--Choose--</option>
+          <option value="student">Student</option>
+          <option value="instructor">Instructor</option>
+          <option value="admin">Admin</option>
+        </select>
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" required />
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" required />
+
+        <button type="submit">Login</button>
+      </form>
+    </div>
+
+    <section id="about" class="section hidden">
+      <h2>About SSU</h2>
+      <p>
+        Slim Shady University (SSU) is a dynamic and forward-thinking institution that blends academic excellence with a culture of creativity, individuality, and innovation. Established with a vision to break traditional boundaries in education, SSU has quickly become a hub for aspiring engineers, tech enthusiasts, and creative problem-solvers.
+      </p>
+      <p>
+        Our university offers a wide range of undergraduate and postgraduate programs in Engineering, Computer Science, Information Technology, and other emerging fields. With a strong focus on practical learning, cutting-edge research, and real-world application, SSU empowers students to not only learn but to lead.
+      </p>
+      <p>
+        At SSU, education goes beyond textbooks. Our highly qualified faculty members are dedicated mentors, our labs are equipped with modern technology, and our curriculum is designed to bridge the gap between academia and industry. From software development to system design, from entrepreneurship to ethical innovation — our students graduate with the knowledge and skills to thrive in a competitive global landscape.
+      </p>
+      <p>
+        We pride ourselves on our diverse and inclusive community, where students from different backgrounds come together to share ideas, collaborate on projects, and create lasting impact. Life at SSU is vibrant, filled with academic challenges, extracurricular opportunities, and a spirit that encourages you to stay true to who you are.
+      </p>
+      <p>
+        At Slim Shady University, we don’t just prepare you for a job — we prepare you for a purpose.
+      </p>
+    </section>
+
+    <section id="contact" class="section hidden">
+      <h2>Contact Us</h2>
+      <p><strong>Phone:</strong> 01303309173</p>
+      <p><strong>Email:</strong> Shakib.fahim@northsouth.edu</p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Slim Shady University. All rights reserved.
+  </footer>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(section => section.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const role = document.getElementById("role").value;
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!role || !username || !password) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      switch (role) {
+        case 'student':
+          window.location.href = "student.html";
+          break;
+        case 'instructor':
+          window.location.href = "instructor.html";
+          break;
+        case 'admin':
+          window.location.href = "admin.html";
+          break;
+        default:
+          alert("Invalid role.");
+      }
+    });
+  </script>
+</body>
+</html>

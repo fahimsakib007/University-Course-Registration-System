@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instructor Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fce4ec;
+      color: #880e4f;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header, footer {
+      background-color: #880e4f;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      background-color: #f8bbd0;
+      display: flex;
+      justify-content: space-around;
+      padding: 1rem 0;
+    }
+    nav button {
+      background: none;
+      border: none;
+      color: #880e4f;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    nav button:hover {
+      text-decoration: underline;
+    }
+    main {
+      flex: 1;
+      padding: 2rem;
+    }
+    section {
+      display: none;
+    }
+    section.active {
+      display: block;
+    }
+    ul {
+      padding-left: 1.2rem;
+    }
+    .success-message {
+      color: green;
+      margin-top: 1rem;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Instructor Dashboard</h1>
+  </header>
+
+  <nav>
+    <button onclick="showSection('profile')">Instructor Profile</button>
+    <button onclick="showSection('courses')">Assigned Courses</button>
+    <button onclick="showSection('grades')">Assign Grades</button>
+    <button onclick="showSection('students')">Student List</button>
+    <button onclick="showSection('notifications')">Notifications</button>
+    <button onclick="logout()">Logout</button>
+  </nav>
+
+  <main>
+    <section id="profile" class="active">
+      <h2>Instructor Profile</h2>
+      <p><strong>Name:</strong> Dr. Marshall Mathers</p>
+      <p><strong>ID:</strong> INS123</p>
+      <p><strong>Department:</strong> Computer Science</p>
+      <p><strong>Email:</strong> eminem@ssu.edu</p>
+      <h3>Courses Assigned:</h3>
+      <ul>
+        <li>CS101 - Intro to Programming</li>
+        <li>CS202 - Algorithms</li>
+      </ul>
+    </section>
+
+    <section id="courses">
+      <h2>Assigned Courses</h2>
+      <ul>
+        <li>
+          <strong>Course ID:</strong> CS101<br />
+          <strong>Title:</strong> Intro to Programming<br />
+          <strong>Semester:</strong> Fall 2025<br />
+          <strong>Schedule:</strong> Mon/Wed 10-11:30<br />
+          <strong>Enrolled Students:</strong> 45
+        </li>
+        <li>
+          <strong>Course ID:</strong> CS202<br />
+          <strong>Title:</strong> Algorithms<br />
+          <strong>Semester:</strong> Fall 2025<br />
+          <strong>Schedule:</strong> Tue/Thu 2-3:30<br />
+          <strong>Enrolled Students:</strong> 38
+        </li>
+      </ul>
+    </section>
+
+    <section id="grades">
+      <h2>Assign Grades</h2>
+      <h3>CS101 - Intro to Programming</h3>
+      <form id="gradeForm">
+        <ul>
+          <li>Student: Alice - Grade: 
+            <select name="Alice" required>
+              <option value="">Select Grade</option>
+              <option value="F">F</option>
+              <option value="D">D</option>
+              <option value="D+">D+</option>
+              <option value="C-">C-</option>
+              <option value="C">C</option>
+              <option value="C+">C+</option>
+              <option value="B-">B-</option>
+              <option value="B">B</option>
+              <option value="B+">B+</option>
+              <option value="A-">A-</option>
+              <option value="A">A</option>
+            </select>
+          </li>
+          <li>Student: Bob - Grade: 
+            <select name="Bob" required>
+              <option value="">Select Grade</option>
+              <option value="F">F</option>
+              <option value="D">D</option>
+              <option value="D+">D+</option>
+              <option value="C-">C-</option>
+              <option value="C">C</option>
+              <option value="C+">C+</option>
+              <option value="B-">B-</option>
+              <option value="B">B</option>
+              <option value="B+">B+</option>
+              <option value="A-">A-</option>
+              <option value="A">A</option>
+            </select>
+          </li>
+          <li>Student: Charlie - Grade: 
+            <select name="Charlie" required>
+              <option value="">Select Grade</option>
+              <option value="F">F</option>
+              <option value="D">D</option>
+              <option value="D+">D+</option>
+              <option value="C-">C-</option>
+              <option value="C">C</option>
+              <option value="C+">C+</option>
+              <option value="B-">B-</option>
+              <option value="B">B</option>
+              <option value="B+">B+</option>
+              <option value="A-">A-</option>
+              <option value="A">A</option>
+            </select>
+          </li>
+        </ul>
+        <button type="submit">Submit Grades</button>
+        <p class="success-message" id="gradeSuccess">Grades submitted successfully!</p>
+      </form>
+    </section>
+
+    <section id="students">
+      <h2>Student List Per Course</h2>
+      <h3>CS101 - Intro to Programming</h3>
+      <ul>
+        <li>ID: S001 - Alice - alice@ssu.edu</li>
+        <li>ID: S002 - Bob - bob@ssu.edu</li>
+        <li>ID: S003 - Charlie - charlie@ssu.edu</li>
+      </ul>
+    </section>
+
+    <section id="notifications">
+      <h2>Notifications</h2>
+      <ul>
+        <li>New course assigned: CS303 - Database Systems</li>
+        <li>Grade submission deadline: Oct 30, 2025</li>
+        <li>Message from Admin: Faculty meeting on Oct 25</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Slim Shady University
+  </footer>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('main section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+    }
+
+    function logout() {
+      window.location.href = 'index.html';
+    }
+
+    document.getElementById('gradeForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const grades = {};
+
+      formData.forEach((value, key) => {
+        grades[key] = value;
+      });
+
+      console.log('Submitted Grades:', grades);
+      document.getElementById('gradeSuccess').style.display = 'block';
+    });
+  </script>
+</body>
+</html>

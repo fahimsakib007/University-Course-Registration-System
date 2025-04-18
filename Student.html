@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #e0f7fa;
+      color: #006064;
+      display: flex;
+      min-height: 100vh;
+    }
+    nav {
+      width: 220px;
+      background-color: #006064;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0.5rem 0;
+      cursor: pointer;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .container {
+      flex: 1;
+      padding: 2rem;
+    }
+    section {
+      display: none;
+      margin-bottom: 2rem;
+    }
+    section.active {
+      display: block;
+    }
+    h2 {
+      border-bottom: 2px solid #006064;
+      padding-bottom: 0.5rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      text-align: left;
+    }
+    th {
+      background-color: #b2ebf2;
+    }
+    button {
+      margin-top: 0.5rem;
+      padding: 0.5rem 1rem;
+      background-color: #006064;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #004d40;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <h2>Dashboard</h2>
+    <a onclick="showSection('profile')">Profile</a>
+    <a onclick="showSection('registration')">Register/Drop Course</a>
+    <a onclick="showSection('courses')">View Courses</a>
+    <a onclick="showSection('instructors')">Instructors</a>
+    <a onclick="showSection('grades')">View Grades</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </nav>
+
+  <div class="container">
+    <section id="profile" class="active">
+      <h2>Student Profile</h2>
+      <p><strong>Name:</strong> John Doe</p>
+      <p><strong>ID:</strong> SSU123456</p>
+      <p><strong>Department:</strong> Computer Science</p>
+      <p><strong>Email:</strong> john.doe@ssu.edu</p>
+      <p><strong>Program:</strong> BSc in CS, Year 2, Semester 1</p>
+    </section>
+
+    <section id="registration">
+      <h2>Course Registration</h2>
+      <h3>Add Course</h3>
+      <select id="courseSelect">
+        <option value="">-- Select a course --</option>
+        <option value="CS101 - Intro to Programming">CS101 - Intro to Programming</option>
+        <option value="CS202 - Data Structures">CS202 - Data Structures</option>
+      </select>
+      <button onclick="addCourse()">Add Course</button>
+
+      <h3>Registered Courses</h3>
+      <table id="registeredCourses">
+        <thead>
+          <tr><th>Course</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          <!-- Dynamically filled -->
+        </tbody>
+      </table>
+    </section>
+
+    <section id="courses">
+      <h2>Available Courses</h2>
+      <table>
+        <thead>
+          <tr><th>Course ID</th><th>Title</th><th>Credits</th><th>Slots</th><th>Schedule</th><th>Instructor</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CS101</td>
+            <td>Intro to Programming</td>
+            <td>3</td>
+            <td>5</td>
+            <td>MWF 9-10AM</td>
+            <td>Prof. Marshall</td>
+          </tr>
+          <tr>
+            <td>CS202</td>
+            <td>Data Structures</td>
+            <td>4</td>
+            <td>2</td>
+            <td>TTh 11-12:30PM</td>
+            <td>TBD</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="instructors">
+      <h2>Instructor Information</h2>
+      <table>
+        <thead>
+          <tr><th>Course</th><th>Instructor</th><th>Email</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CS101</td>
+            <td>Prof. Marshall</td>
+            <td>marshall@ssu.edu</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="grades">
+      <h2>Grades</h2>
+      <table id="gradeTable">
+        <thead>
+          <tr><th>Course</th><th>Grade</th><th>Credits</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CS101 - Intro to Programming</td>
+            <td>A</td>
+            <td>3</td>
+          </tr>
+        </tbody>
+      </table>
+      <button onclick="downloadGradeReport()">Download Grade Report</button>
+    </section>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+    }
+
+    function addCourse() {
+      const select = document.getElementById('courseSelect');
+      const course = select.value;
+      if (!course) return alert("Please select a course.");
+
+      const tbody = document.getElementById('registeredCourses').querySelector('tbody');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${course}</td><td><button onclick="dropCourse(this)">Drop</button></td>`;
+      tbody.appendChild(tr);
+
+      select.value = "";
+    }
+
+    function dropCourse(button) {
+      const row = button.parentElement.parentElement;
+      row.remove();
+    }
+
+    async function downloadGradeReport() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const table = document.getElementById('gradeTable');
+      const rows = table.querySelectorAll('tbody tr');
+
+      let y = 10;
+      doc.setFontSize(14);
+      doc.text("Grade Report", 14, y);
+      y += 10;
+
+      doc.setFontSize(12);
+      doc.text("Course", 14, y);
+      doc.text("Grade", 100, y);
+      doc.text("Credits", 150, y);
+      y += 10;
+
+      rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        doc.text(cells[0].innerText, 14, y);
+        doc.text(cells[1].innerText, 100, y);
+        doc.text(cells[2].innerText, 150, y);
+        y += 10;
+      });
+
+      doc.save("grade_report.pdf");
+    }
+
+    function logout() {
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

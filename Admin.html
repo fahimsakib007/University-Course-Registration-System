@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f3e5f5;
+      color: #4a148c;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #4a148c;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .container {
+      display: flex;
+      flex: 1;
+    }
+
+    nav {
+      width: 250px;
+      background-color: #e1bee7;
+      padding: 1rem;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    nav button {
+      display: block;
+      background: none;
+      border: none;
+      color: #4a148c;
+      font-size: 1rem;
+      text-align: left;
+      margin: 0.5rem 0;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    nav button:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      flex: 1;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .content-section {
+      display: none;
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    footer {
+      background-color: black;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Admin Dashboard</h1>
+  </header>
+
+  <div class="container">
+    <nav>
+      <button onclick="showSection('profile')">Admin Profile</button>
+      <button onclick="showSection('student')">Student Management</button>
+      <button onclick="showSection('instructor')">Instructor Management</button>
+      <button onclick="showSection('course')">Course Management</button>
+      <button onclick="showSection('schedule')">Schedule Management</button>
+      <button onclick="showSection('department')">Department Management</button>
+      <button onclick="showSection('registration')">Monitor Course Registration</button>
+      <button onclick="showSection('notifications')">Notifications & Reports</button>
+      <button onclick="logout()">Logout</button>
+    </nav>
+
+    <main>
+      <section id="profile" class="content-section active">
+        <h2>Admin Profile</h2>
+        <p><strong>Name:</strong> Admin Shady</p>
+        <p><strong>ID:</strong> ADM001</p>
+        <p><strong>Department:</strong> Administration</p>
+        <p><strong>Contact:</strong> admin@ssu.edu</p>
+      </section>
+
+      <section id="student" class="content-section">
+        <h2>Student Management</h2>
+        <ul>
+          <li><a href="#">View student list (ID, name, department, email)</a></li>
+          <li><a href="#">Validate registration information</a></li>
+          <li><a href="#">Approve/manage registration requests</a></li>
+          <li><a href="#">Add/remove students</a></li>
+        </ul>
+      </section>
+
+      <section id="instructor" class="content-section">
+        <h2>Instructor Management</h2>
+        <ul>
+          <li><a href="#">View instructor profiles</a></li>
+          <li><a href="#">Assign instructors to courses</a></li>
+          <li><a href="#">Approve instructor course requests</a></li>
+        </ul>
+      </section>
+
+      <!-- Course Management Section -->
+      <section id="course" class="content-section">
+        <h2>Course Management</h2>
+        <ul>
+          <li><a href="javascript:void(0);" onclick="createNewCourse()">Create new courses</a></li>
+          <li><a href="javascript:void(0);" onclick="editDeleteCourse()">Edit/delete existing courses</a></li>
+          <li><a href="javascript:void(0);" onclick="assignInstructor()">Assign instructors to courses</a></li>
+          <li><a href="javascript:void(0);" onclick="viewEnrollmentCounts()">View student enrollment counts</a></li>
+        </ul>
+      </section>
+
+      <!-- Schedule Management Section -->
+      <section id="schedule" class="content-section">
+        <h2>Schedule Management</h2>
+        <ul>
+          <li><a href="#">Create/edit course schedules</a></li>
+          <li><a href="#">Assign time slots, days, and rooms</a></li>
+          <li><a href="#">Check for scheduling conflicts</a></li>
+        </ul>
+      </section>
+
+      <!-- Department Management Section -->
+      <section id="department" class="content-section">
+        <h2>Department Management</h2>
+        <ul>
+          <li><a href="#">Add/edit departments</a></li>
+          <li><a href="#">Assign department heads or staff</a></li>
+          <li><a href="#">Link courses to departments</a></li>
+        </ul>
+      </section>
+
+      <!-- Registration Section -->
+      <section id="registration" class="content-section">
+        <h2>Monitor Course Registration</h2>
+        <ul>
+          <li><a href="#">View course registration data</a></li>
+          <li><a href="#">Approve/reject registrations</a></li>
+          <li><a href="#">Track enrollment and available seats</a></li>
+        </ul>
+      </section>
+
+      <!-- Notifications Section -->
+      <section id="notifications" class="content-section">
+        <h2>Notifications & Reports</h2>
+        <ul>
+          <li><a href="#">System messages and alerts</a></li>
+          <li><a href="#">Generate registration summary reports</a></li>
+          <li><a href="#">Instructor workload reports</a></li>
+          <li><a href="#">Grade distribution reports</a></li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    © 2025 Slim Shady University. All rights reserved.
+  </footer>
+
+  <script>
+    // Functions to handle each action for the dashboard sections
+    function showSection(id) {
+      document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+    }
+
+    function logout() {
+      window.location.href = 'index.html';
+    }
+
+    // Simulated functions for course management
+    function createNewCourse() {
+      let courseName = prompt("Enter course name:");
+      let courseCode = prompt("Enter course code:");
+      alert("New course created: " + courseName + " (" + courseCode + ")");
+    }
+
+    function editDeleteCourse() {
+      let courseCode = prompt("Enter course code to edit/delete:");
+      let action = prompt("Do you want to 'edit' or 'delete' the course?");
+      alert(action + " action performed on course with code: " + courseCode);
+    }
+
+    function assignInstructor() {
+      let courseCode = prompt("Enter course code to assign instructor:");
+      let instructorName = prompt("Enter instructor name:");
+      alert("Instructor " + instructorName + " assigned to course: " + courseCode);
+    }
+
+    function viewEnrollmentCounts() {
+      let courseCode = prompt("Enter course code to view enrollment:");
+      let enrolledStudents = 30; // Example number, replace with actual logic
+      alert("Course " + courseCode + " has " + enrolledStudents + " enrolled students.");
+    }
+  </script>
+</body>
+</html>
